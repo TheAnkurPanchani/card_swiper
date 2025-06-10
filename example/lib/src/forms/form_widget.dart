@@ -76,7 +76,7 @@ class _FormSelectState<T> extends State<FormSelect<T>> {
           _selectedIndex < 0 ? placeholder : values[_selectedIndex].toString()),
       onTap: () {
         _selectedIndex = 0;
-        showBottomSheet<dynamic>(
+        showBottomSheet(
             context: context,
             builder: (context) {
               return SizedBox(

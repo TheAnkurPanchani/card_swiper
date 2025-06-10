@@ -902,7 +902,9 @@ class _StackViewState extends _CustomLayoutStateBase<_StackSwiper> {
           : [_swiperWidth, 0.0, -space / 3, -space / 3 * 2, -space];
     } else {
       final space = (_swiperHeight - widget.itemHeight!) / 2;
-      offsets = [-space, -space / 3 * 2, -space / 3, 0.0, _swiperHeight];
+      offsets = widget.axisDirection == AxisDirection.up
+          ? [-space, -space / 3 * 2, -space / 3, 0.0, _swiperHeight]
+          : [-space, space / 3 + 90, space, 0.0, -_swiperHeight];
     }
   }
 
@@ -935,18 +937,22 @@ class _StackViewState extends _CustomLayoutStateBase<_StackSwiper> {
     final s = _getValue(scales, animationValue, i);
     final f = _getValue(offsets, animationValue, i);
     final o = _getValue(opacity, animationValue, i);
+    print('buildCalled => i: $realIndex a: $animationValue f: $f o: $o');
+    print('offsets: $offsets');
 
     final offset = widget.scrollDirection == Axis.horizontal
         ? widget.axisDirection == AxisDirection.left
             ? Offset(f, 0.0)
             : Offset(-f, 0.0)
         : Offset(0.0, f);
+    // : Offset(0.0, -f);
 
     final alignment = widget.scrollDirection == Axis.horizontal
         ? widget.axisDirection == AxisDirection.left
             ? Alignment.centerLeft
             : Alignment.centerRight
         : Alignment.topCenter;
+    // : Alignment.bottomCenter;
 
     return Opacity(
       opacity: o,
