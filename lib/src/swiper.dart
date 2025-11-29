@@ -581,6 +581,7 @@ class _SwiperState extends _SwiperTimerMixin {
         onIndexChanged: _onIndexChanged,
         controller: _controller,
         scrollDirection: widget.scrollDirection,
+        axisDirection: widget.axisDirection,
       );
     } else {
       return const SizedBox.shrink();

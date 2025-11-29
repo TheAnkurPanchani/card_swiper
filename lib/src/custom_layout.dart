@@ -402,6 +402,7 @@ class _CustomLayoutSwiper extends _SubSwiper {
     required int itemCount,
     Axis? scrollDirection,
     required SwiperController controller,
+    AxisDirection? axisDirection,
   }) : super(
             loop: loop,
             onIndexChanged: onIndexChanged,
@@ -414,7 +415,9 @@ class _CustomLayoutSwiper extends _SubSwiper {
             index: index,
             itemCount: itemCount,
             controller: controller,
-            scrollDirection: scrollDirection);
+            scrollDirection: scrollDirection,
+            axisDirection: axisDirection
+  );
 
   final CustomLayoutOption option;
 
