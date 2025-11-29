@@ -354,6 +354,10 @@ abstract class _SwiperTimerMixin extends State<Swiper> {
       } else {
         _stopAutoplay();
       }
+    } else if (event is IndexControllerEventBase) {
+      if (event.needToResetTimer) {
+        _startAutoplay();
+      }
     }
   }
 
@@ -395,7 +399,10 @@ abstract class _SwiperTimerMixin extends State<Swiper> {
   }
 
   Future<void> _onTimer(Timer timer) async {
-    return _controller.next(animation: true);
+    return _controller.next(
+      animation: true,
+      needToResetTimer: false,
+    );
   }
 
   void _stopAutoplay() {
@@ -581,6 +588,7 @@ class _SwiperState extends _SwiperTimerMixin {
         onIndexChanged: _onIndexChanged,
         controller: _controller,
         scrollDirection: widget.scrollDirection,
+        axisDirection: widget.axisDirection,
         allowScrolling: widget.allowScrolling,
       );
     } else {

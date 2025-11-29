@@ -403,6 +403,7 @@ class _CustomLayoutSwiper extends _SubSwiper {
     required int itemCount,
     Axis? scrollDirection,
     required SwiperController controller,
+    AxisDirection? axisDirection,
     bool allowScrolling = true,
   }) : super(
           loop: loop,
@@ -417,6 +418,7 @@ class _CustomLayoutSwiper extends _SubSwiper {
           itemCount: itemCount,
           controller: controller,
           scrollDirection: scrollDirection,
+          axisDirection: axisDirection,
           allowScrolling: allowScrolling,
         );
 
