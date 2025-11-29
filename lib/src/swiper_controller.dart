@@ -5,7 +5,10 @@ class SwipeIndexControllerEvent extends IndexControllerEventBase {
   SwipeIndexControllerEvent({
     required this.pos,
     required bool animation,
-  }) : super(animation: animation);
+  }) : super(
+          animation: animation,
+          needToResetTimer: false,
+        );
   final double pos;
 }
 
@@ -13,7 +16,10 @@ class BuildIndexControllerEvent extends IndexControllerEventBase {
   BuildIndexControllerEvent({
     required bool animation,
     required this.config,
-  }) : super(animation: animation);
+  }) : super(
+          animation: animation,
+          needToResetTimer: false,
+        );
   final SwiperPluginConfig config;
 }
 
@@ -21,7 +27,10 @@ class AutoPlaySwiperControllerEvent extends IndexControllerEventBase {
   AutoPlaySwiperControllerEvent({
     required bool animation,
     required this.autoplay,
-  }) : super(animation: animation);
+  }) : super(
+          animation: animation,
+          needToResetTimer: false,
+        );
 
   AutoPlaySwiperControllerEvent.start({
     required bool animation,

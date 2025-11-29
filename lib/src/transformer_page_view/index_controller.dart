@@ -6,9 +6,11 @@ import 'package:flutter/widgets.dart';
 abstract class IndexControllerEventBase {
   IndexControllerEventBase({
     required this.animation,
+    required this.needToResetTimer,
   });
 
   final bool animation;
+  final bool needToResetTimer;
 
   final completer = Completer<void>();
   Future<void> get future => completer.future;
@@ -52,8 +54,10 @@ class NextIndexControllerEvent extends IndexControllerEventBase
     with TargetedPositionControllerEvent, StepBasedIndexControllerEvent {
   NextIndexControllerEvent({
     required bool animation,
+    bool needToResetTimer = false,
   }) : super(
           animation: animation,
+          needToResetTimer: needToResetTimer,
         );
 
   @override
@@ -67,8 +71,10 @@ class PrevIndexControllerEvent extends IndexControllerEventBase
     with TargetedPositionControllerEvent, StepBasedIndexControllerEvent {
   PrevIndexControllerEvent({
     required bool animation,
+    bool needToResetTimer = false,
   }) : super(
           animation: animation,
+          needToResetTimer: needToResetTimer,
         );
   @override
   int get step => -1;
@@ -83,8 +89,10 @@ class MoveIndexControllerEvent extends IndexControllerEventBase
     required this.newIndex,
     required this.oldIndex,
     required bool animation,
+    bool needToResetTimer = false,
   }) : super(
           animation: animation,
+          needToResetTimer: needToResetTimer,
         );
   final int newIndex;
   final int oldIndex;
@@ -95,24 +103,41 @@ class MoveIndexControllerEvent extends IndexControllerEventBase
 class IndexController extends ChangeNotifier {
   IndexControllerEventBase? event;
   int index = 0;
-  Future<void> move(int index, {bool animation = true}) {
+  Future<void> move(
+    int index, {
+    bool animation = true,
+    bool needToResetTimer = true,
+  }) {
     final e = event = MoveIndexControllerEvent(
       animation: animation,
       newIndex: index,
       oldIndex: this.index,
+      needToResetTimer: needToResetTimer,
     );
     notifyListeners();
     return e.future;
   }
 
-  Future<void> next({bool animation = true}) {
-    final e = event = NextIndexControllerEvent(animation: animation);
+  Future<void> next({
+    bool animation = true,
+    bool needToResetTimer = true,
+  }) {
+    final e = event = NextIndexControllerEvent(
+      animation: animation,
+      needToResetTimer: needToResetTimer,
+    );
     notifyListeners();
     return e.future;
   }
 
-  Future<void> previous({bool animation = true}) {
-    final e = event = PrevIndexControllerEvent(animation: animation);
+  Future<void> previous({
+    bool animation = true,
+    bool needToResetTimer = true,
+  }) {
+    final e = event = PrevIndexControllerEvent(
+      animation: animation,
+      needToResetTimer: needToResetTimer,
+    );
     notifyListeners();
     return e.future;
   }
