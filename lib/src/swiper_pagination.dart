@@ -111,22 +111,20 @@ class RectSwiperPaginationBuilder extends SwiperPlugin {
     if (itemCount > 20) {
       log(
         'The itemCount is too big, we suggest use FractionPaginationBuilder '
-        'instead of DotSwiperPaginationBuilder in this situation',
+            'instead of DotSwiperPaginationBuilder in this situation',
       );
     }
 
     for (var i = 0; i < itemCount; ++i) {
       final active = i == activeIndex;
       final size = active ? activeSize : this.size;
-      list.add(SizedBox(
+      list.add(Container(
         width: size.width,
         height: size.height,
-        child: Container(
-          color: active ? activeColor : color,
-          key: Key('pagination_$i'),
-          margin: EdgeInsets.all(space),
-        ),
-      ));
+        color: active ? activeColor : color,
+        key: Key('pagination_$i'),
+        margin: EdgeInsets.all(space),
+      ),);
     }
 
     if (config.scrollDirection == Axis.vertical) {
@@ -177,7 +175,7 @@ class DotSwiperPaginationBuilder extends SwiperPlugin {
     if (config.itemCount > 20) {
       log(
         'The itemCount is too big, we suggest use FractionPaginationBuilder '
-        'instead of DotSwiperPaginationBuilder in this situation',
+            'instead of DotSwiperPaginationBuilder in this situation',
       );
     }
     var activeColor = this.activeColor;
@@ -239,9 +237,9 @@ class DotSwiperPaginationBuilder extends SwiperPlugin {
 }
 
 typedef SwiperPaginationBuilder = Widget Function(
-  BuildContext context,
-  SwiperPluginConfig config,
-);
+    BuildContext context,
+    SwiperPluginConfig config,
+    );
 
 class SwiperCustomPagination extends SwiperPlugin {
   const SwiperCustomPagination({required this.builder});

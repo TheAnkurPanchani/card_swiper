@@ -133,7 +133,7 @@ class ExampleHorizontal extends StatelessWidget {
         indicatorLayout: PageIndicatorLayout.COLOR,
         autoplay: true,
         itemCount: images.length,
-        pagination: const SwiperPagination(),
+        pagination: const SwiperPagination(builder: SwiperPagination.rect),
         control: const SwiperControl(),
       ),
     );
