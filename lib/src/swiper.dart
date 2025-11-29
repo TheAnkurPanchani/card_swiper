@@ -72,6 +72,7 @@ class Swiper extends StatefulWidget {
     this.scale,
     this.fade,
     this.allowImplicitScrolling = false,
+    this.allowScrolling = true,
   })  : assert(
           itemBuilder != null || transformer != null,
           'itemBuilder and transformItemBuilder must not be both null',
@@ -118,6 +119,7 @@ class Swiper extends StatefulWidget {
     double? fade,
     PageIndicatorLayout indicatorLayout = PageIndicatorLayout.NONE,
     SwiperLayout layout = SwiperLayout.DEFAULT,
+    bool allowScrolling = true,
   }) =>
       Swiper(
         fade: fade,
@@ -153,6 +155,7 @@ class Swiper extends StatefulWidget {
           return children[index];
         },
         itemCount: children.length,
+        allowScrolling: allowScrolling,
       );
 
   /// If set true , the pagination will display 'outer' of the 'content' container.
@@ -247,6 +250,8 @@ class Swiper extends StatefulWidget {
 
   final bool allowImplicitScrolling;
 
+  final bool allowScrolling;
+
   static Swiper list<T>({
     PageTransformer? transformer,
     required List<T> list,
@@ -280,6 +285,7 @@ class Swiper extends StatefulWidget {
     double? fade,
     PageIndicatorLayout indicatorLayout = PageIndicatorLayout.NONE,
     SwiperLayout layout = SwiperLayout.DEFAULT,
+    bool allowScrolling = true,
   }) =>
       Swiper(
         fade: fade,
@@ -315,6 +321,7 @@ class Swiper extends StatefulWidget {
           return builder(context, list[index], index);
         },
         itemCount: list.length,
+        allowScrolling: allowScrolling,
       );
 
   @override
@@ -346,6 +353,10 @@ abstract class _SwiperTimerMixin extends State<Swiper> {
         }
       } else {
         _stopAutoplay();
+      }
+    } else if (event is IndexControllerEventBase) {
+      if (event.needToResetTimer) {
+        _startAutoplay();
       }
     }
   }
@@ -388,7 +399,10 @@ abstract class _SwiperTimerMixin extends State<Swiper> {
   }
 
   Future<void> _onTimer(Timer timer) async {
-    return _controller.next(animation: true);
+    return _controller.next(
+      animation: true,
+      needToResetTimer: false,
+    );
   }
 
   void _stopAutoplay() {
@@ -574,6 +588,8 @@ class _SwiperState extends _SwiperTimerMixin {
         onIndexChanged: _onIndexChanged,
         controller: _controller,
         scrollDirection: widget.scrollDirection,
+        axisDirection: widget.axisDirection,
+        allowScrolling: widget.allowScrolling,
       );
     } else {
       return const SizedBox.shrink();
@@ -703,6 +719,7 @@ abstract class _SubSwiper extends StatefulWidget {
     this.scrollDirection = Axis.horizontal,
     this.axisDirection = AxisDirection.left,
     this.onIndexChanged,
+    this.allowScrolling = true,
   }) : super(key: key);
 
   final IndexedWidgetBuilder? itemBuilder;
@@ -717,6 +734,7 @@ abstract class _SubSwiper extends StatefulWidget {
   final bool loop;
   final Axis? scrollDirection;
   final AxisDirection? axisDirection;
+  final bool allowScrolling;
 
   @override
   State<StatefulWidget> createState();

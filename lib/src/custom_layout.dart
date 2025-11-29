@@ -7,6 +7,7 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
   late Animation<double> _animation;
   late AnimationController _animationController;
   SwiperController get _controller => widget.controller;
+  bool get _allowScrolling => widget.allowScrolling;
   late int _startIndex;
   int? _animationCount;
   int _currentIndex = 0;
@@ -120,9 +121,9 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onPanStart: _onPanStart,
-      onPanEnd: _onPanEnd,
-      onPanUpdate: _onPanUpdate,
+      onPanStart: _allowScrolling ? _onPanStart : null,
+      onPanEnd: _allowScrolling ? _onPanEnd : null,
+      onPanUpdate: _allowScrolling ? _onPanUpdate : null,
       child: ClipRect(
         child: Center(
           child: _buildContainer(list),
@@ -402,19 +403,24 @@ class _CustomLayoutSwiper extends _SubSwiper {
     required int itemCount,
     Axis? scrollDirection,
     required SwiperController controller,
+    AxisDirection? axisDirection,
+    bool allowScrolling = true,
   }) : super(
-            loop: loop,
-            onIndexChanged: onIndexChanged,
-            itemWidth: itemWidth,
-            itemHeight: itemHeight,
-            key: key,
-            itemBuilder: itemBuilder,
-            curve: curve,
-            duration: duration,
-            index: index,
-            itemCount: itemCount,
-            controller: controller,
-            scrollDirection: scrollDirection);
+          loop: loop,
+          onIndexChanged: onIndexChanged,
+          itemWidth: itemWidth,
+          itemHeight: itemHeight,
+          key: key,
+          itemBuilder: itemBuilder,
+          curve: curve,
+          duration: duration,
+          index: index,
+          itemCount: itemCount,
+          controller: controller,
+          scrollDirection: scrollDirection,
+          axisDirection: axisDirection,
+          allowScrolling: allowScrolling,
+        );
 
   final CustomLayoutOption option;
 
