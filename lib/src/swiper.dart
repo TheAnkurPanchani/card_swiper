@@ -355,7 +355,7 @@ abstract class _SwiperTimerMixin extends State<Swiper> {
         _stopAutoplay();
       }
     } else if (event is IndexControllerEventBase) {
-      if (event.needToResetTimer) {
+      if (event.needToResetTimer && (widget.autoplay || _timer != null)) {
         _startAutoplay();
       }
     }
@@ -521,8 +521,7 @@ class _SwiperState extends _SwiperTimerMixin {
       //default
       var transformer = widget.transformer;
       if (widget.scale != null || widget.fade != null) {
-        transformer =
-            ScaleAndFadeTransformer(scale: widget.scale, fade: widget.fade);
+        transformer = ScaleAndFadeTransformer(scale: widget.scale, fade: widget.fade);
       }
 
       final child = TransformerPageView(
@@ -656,10 +655,8 @@ class _SwiperState extends _SwiperTimerMixin {
     if (widget.pagination != null) {
       config = _ensureConfig(config);
       if (widget.outer) {
-        return _buildOuterPagination(
-            widget.pagination! as SwiperPagination,
-            listForStack == null ? swiper : Stack(children: listForStack),
-            config);
+        return _buildOuterPagination(widget.pagination! as SwiperPagination,
+            listForStack == null ? swiper : Stack(children: listForStack), config);
       } else {
         listForStack = _ensureListForStack(
           swiper: swiper,
@@ -881,9 +878,8 @@ class _TinderState extends _CustomLayoutStateBase<_TinderSwiper> {
     final o = _getValue(opacity, animationValue, i);
     final a = _getValue(rotates, animationValue, i);
 
-    final alignment = widget.scrollDirection == Axis.horizontal
-        ? Alignment.bottomCenter
-        : Alignment.centerLeft;
+    final alignment =
+        widget.scrollDirection == Axis.horizontal ? Alignment.bottomCenter : Alignment.centerLeft;
 
     return Opacity(
       opacity: o,
@@ -940,10 +936,8 @@ class _StackViewState extends _CustomLayoutStateBase<_StackSwiper> {
 
     //Array below this line, '0' index is 1.0, which is the first item show in swiper.
     _startIndex = isRightSide ? -1 : -3;
-    scales =
-        isRightSide ? [1.0, 1.0, 0.9, 0.8, 0.7] : [0.7, 0.8, 0.9, 1.0, 1.0];
-    opacity =
-        isRightSide ? [1.0, 1.0, 1.0, 0.5, 0.0] : [0.0, 0.5, 1.0, 1.0, 1.0];
+    scales = isRightSide ? [1.0, 1.0, 0.9, 0.8, 0.7] : [0.7, 0.8, 0.9, 1.0, 1.0];
+    opacity = isRightSide ? [1.0, 1.0, 1.0, 0.5, 0.0] : [0.0, 0.5, 1.0, 1.0, 1.0];
 
     _updateValues();
   }
