@@ -223,6 +223,7 @@ class TransformerPageView extends StatefulWidget {
     this.pageSnapping = true,
     this.onPageChanged,
     this.controller,
+    this.clipBehavior = Clip.hardEdge,
     this.transformer,
     this.allowImplicitScrolling = false,
     this.itemBuilder,
@@ -245,6 +246,7 @@ class TransformerPageView extends StatefulWidget {
     bool pageSnapping = true,
     ValueChanged<int?>? onPageChanged,
     IndexController? controller,
+    Clip clipBehavior = Clip.hardEdge,
     PageTransformer? transformer,
     bool allowImplicitScrolling = false,
     required List<Widget> children,
@@ -269,6 +271,7 @@ class TransformerPageView extends StatefulWidget {
       allowImplicitScrolling: allowImplicitScrolling,
       onPageChanged: onPageChanged,
       controller: controller,
+      clipBehavior: clipBehavior,
     );
   }
 
@@ -303,6 +306,9 @@ class TransformerPageView extends StatefulWidget {
 
   /// Animation curve
   final Curve curve;
+
+  /// Clip behavior
+  final Clip clipBehavior;
 
   final TransformerPageController? pageController;
 
@@ -432,6 +438,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
       itemCount: _pageController.getRealItemCount(),
       onPageChanged: _onIndexChanged,
       controller: _pageController,
+      clipBehavior: widget.clipBehavior,
       scrollDirection: widget.scrollDirection,
       physics: widget.physics,
       pageSnapping: widget.pageSnapping,
