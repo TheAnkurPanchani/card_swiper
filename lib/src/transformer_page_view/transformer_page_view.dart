@@ -220,6 +220,7 @@ class TransformerPageView extends StatefulWidget {
     required this.loop,
     this.scrollDirection = Axis.horizontal,
     this.physics,
+    this.clipBehavior = Clip.hardEdge,
     this.pageSnapping = true,
     this.onPageChanged,
     this.controller,
@@ -242,6 +243,7 @@ class TransformerPageView extends StatefulWidget {
     bool loop = false,
     Axis scrollDirection = Axis.horizontal,
     ScrollPhysics? physics,
+    Clip clipBehavior = Clip.hardEdge,
     bool pageSnapping = true,
     ValueChanged<int?>? onPageChanged,
     IndexController? controller,
@@ -266,6 +268,7 @@ class TransformerPageView extends StatefulWidget {
       viewportFraction: viewportFraction,
       scrollDirection: scrollDirection,
       physics: physics,
+      clipBehavior: clipBehavior,
       allowImplicitScrolling: allowImplicitScrolling,
       onPageChanged: onPageChanged,
       controller: controller,
@@ -284,6 +287,9 @@ class TransformerPageView extends StatefulWidget {
 
   /// Same as [PageView.physics]
   final ScrollPhysics? physics;
+
+  /// Same as [PageView.clipBehavior]
+  final Clip clipBehavior;
 
   /// Set to false to disable page snapping, useful for custom scroll behavior.
   /// Same as [PageView.pageSnapping]
@@ -434,6 +440,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
       controller: _pageController,
       scrollDirection: widget.scrollDirection,
       physics: widget.physics,
+      clipBehavior: widget.clipBehavior,
       pageSnapping: widget.pageSnapping,
       reverse: _pageController.reverse,
     );
