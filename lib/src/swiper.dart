@@ -58,6 +58,7 @@ class Swiper extends StatefulWidget {
     this.pagination,
     this.plugins,
     this.physics,
+    this.clipBehavior = Clip.hardEdge,
     Key? key,
     this.controller,
     this.customLayoutOption,
@@ -109,6 +110,7 @@ class Swiper extends StatefulWidget {
     Key? key,
     CustomLayoutOption? customLayoutOption,
     ScrollPhysics? physics,
+    Clip clipBehavior = Clip.hardEdge,
     double? containerHeight,
     double? containerWidth,
     double viewportFraction = 1.0,
@@ -150,6 +152,7 @@ class Swiper extends StatefulWidget {
         loop: loop,
         plugins: plugins,
         physics: physics,
+        clipBehavior: clipBehavior,
         key: key,
         itemBuilder: (context, index) {
           return children[index];
@@ -231,6 +234,8 @@ class Swiper extends StatefulWidget {
 
   final ScrollPhysics? physics;
 
+  final Clip clipBehavior;
+
   ///
   final double viewportFraction;
 
@@ -275,6 +280,7 @@ class Swiper extends StatefulWidget {
     SwiperController? controller,
     Key? key,
     ScrollPhysics? physics,
+    Clip clipBehavior = Clip.hardEdge,
     double? containerHeight,
     double? containerWidth,
     double viewportFraction = 1.0,
@@ -317,6 +323,7 @@ class Swiper extends StatefulWidget {
         loop: loop,
         plugins: plugins,
         physics: physics,
+        clipBehavior: clipBehavior,
         itemBuilder: (context, index) {
           return builder(context, list[index], index);
         },
@@ -537,6 +544,7 @@ class _SwiperState extends _SwiperTimerMixin {
         onPageChanged: _onIndexChanged,
         curve: widget.curve,
         physics: widget.physics,
+        clipBehavior: widget.clipBehavior,
         controller: _controller,
         allowImplicitScrolling: widget.allowImplicitScrolling,
       );
