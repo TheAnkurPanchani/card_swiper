@@ -229,6 +229,7 @@ class TransformerPageView extends StatefulWidget {
     this.itemBuilder,
     this.pageController,
     required this.itemCount,
+    this.clipBehavior = Clip.hardEdge,
   })  : assert(itemCount == 0 || itemBuilder != null || transformer != null),
         duration = duration ??
             const Duration(milliseconds: kDefaultTransactionDuration),
@@ -250,6 +251,7 @@ class TransformerPageView extends StatefulWidget {
     PageTransformer? transformer,
     bool allowImplicitScrolling = false,
     required List<Widget> children,
+    Clip clipBehavior = Clip.hardEdge,
     TransformerPageController? pageController,
   }) {
     return TransformerPageView(
@@ -272,6 +274,7 @@ class TransformerPageView extends StatefulWidget {
       allowImplicitScrolling: allowImplicitScrolling,
       onPageChanged: onPageChanged,
       controller: controller,
+      clipBehavior: clipBehavior
     );
   }
 
@@ -325,6 +328,8 @@ class TransformerPageView extends StatefulWidget {
   final int? index;
 
   final bool allowImplicitScrolling;
+
+  final Clip clipBehavior;
 
   @override
   State<StatefulWidget> createState() => _TransformerPageViewState();
@@ -443,6 +448,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
       clipBehavior: widget.clipBehavior,
       pageSnapping: widget.pageSnapping,
       reverse: _pageController.reverse,
+      clipBehavior: widget.clipBehavior,
     );
     if (_transformer == null) {
       return child;

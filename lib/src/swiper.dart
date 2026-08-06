@@ -74,6 +74,7 @@ class Swiper extends StatefulWidget {
     this.fade,
     this.allowImplicitScrolling = false,
     this.allowScrolling = true,
+    this.clipBehavior = Clip.hardEdge,
   })  : assert(
           itemBuilder != null || transformer != null,
           'itemBuilder and transformItemBuilder must not be both null',
@@ -122,6 +123,7 @@ class Swiper extends StatefulWidget {
     PageIndicatorLayout indicatorLayout = PageIndicatorLayout.NONE,
     SwiperLayout layout = SwiperLayout.DEFAULT,
     bool allowScrolling = true,
+    Clip clipBehavior = Clip.hardEdge,
   }) =>
       Swiper(
         fade: fade,
@@ -159,6 +161,7 @@ class Swiper extends StatefulWidget {
         },
         itemCount: children.length,
         allowScrolling: allowScrolling,
+        clipBehavior: clipBehavior,
       );
 
   /// If set true , the pagination will display 'outer' of the 'content' container.
@@ -257,6 +260,8 @@ class Swiper extends StatefulWidget {
 
   final bool allowScrolling;
 
+  final Clip clipBehavior;
+
   static Swiper list<T>({
     PageTransformer? transformer,
     required List<T> list,
@@ -292,6 +297,7 @@ class Swiper extends StatefulWidget {
     PageIndicatorLayout indicatorLayout = PageIndicatorLayout.NONE,
     SwiperLayout layout = SwiperLayout.DEFAULT,
     bool allowScrolling = true,
+    Clip clipBehavior = Clip.hardEdge,
   }) =>
       Swiper(
         fade: fade,
@@ -329,6 +335,7 @@ class Swiper extends StatefulWidget {
         },
         itemCount: list.length,
         allowScrolling: allowScrolling,
+        clipBehavior: clipBehavior,
       );
 
   @override
@@ -547,6 +554,7 @@ class _SwiperState extends _SwiperTimerMixin {
         clipBehavior: widget.clipBehavior,
         controller: _controller,
         allowImplicitScrolling: widget.allowImplicitScrolling,
+        clipBehavior: widget.clipBehavior
       );
       if (widget.autoplayDisableOnInteraction && widget.autoplay) {
         return NotificationListener(
