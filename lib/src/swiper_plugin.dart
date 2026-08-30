@@ -38,10 +38,10 @@ class SwiperPluginConfig {
 
 class SwiperPluginView extends StatelessWidget {
   const SwiperPluginView({
-    Key? key,
+    super.key,
     required this.plugin,
     required this.config,
-  }) : super(key: key);
+  });
 
   final SwiperPlugin plugin;
   final SwiperPluginConfig config;

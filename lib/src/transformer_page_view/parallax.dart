@@ -25,7 +25,7 @@ class ColorPainter extends CustomPainter {
     final position = info.position;
     if (info.forward!) {
       if (index < colors.length - 1) {
-        color = colors[index + 1].value & 0x00ffffff;
+        color = colors[index + 1].toARGB32() & 0x00ffffff;
         opacity = (position! <= 0
             ? (-position / info.viewportFraction!)
             : 1 - position / info.viewportFraction!);
@@ -39,11 +39,13 @@ class ColorPainter extends CustomPainter {
 
         _paint.color = Color((alpha << 24) | color);
         canvas.drawRect(
-            Rect.fromLTWH(0.0, 0.0, size.width, size.height), _paint);
+          Rect.fromLTWH(0.0, 0.0, size.width, size.height),
+          _paint,
+        );
       }
     } else {
       if (index > 0) {
-        color = colors[index - 1].value & 0x00ffffff;
+        color = colors[index - 1].toARGB32() & 0x00ffffff;
         opacity = (position! > 0
             ? position / info.viewportFraction!
             : (1 + position / info.viewportFraction!));
@@ -57,7 +59,9 @@ class ColorPainter extends CustomPainter {
 
         _paint.color = Color((alpha << 24) | color);
         canvas.drawRect(
-            Rect.fromLTWH(0.0, 0.0, size.width, size.height), _paint);
+          Rect.fromLTWH(0.0, 0.0, size.width, size.height),
+          _paint,
+        );
       }
     }
   }
@@ -82,11 +86,11 @@ class _ParallaxColorState extends State<ParallaxColor> {
 
 class ParallaxColor extends StatefulWidget {
   const ParallaxColor({
-    Key? key,
+    super.key,
     required this.child,
     required this.colors,
     required this.info,
-  }) : super(key: key);
+  });
 
   final Widget child;
 
@@ -102,12 +106,12 @@ class ParallaxColor extends StatefulWidget {
 
 class ParallaxContainer extends StatelessWidget {
   const ParallaxContainer({
-    Key? key,
+    super.key,
     required this.child,
     required this.position,
     this.translationFactor = 100.0,
     this.opacityFactor = 1.0,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final double position;
@@ -129,18 +133,14 @@ class ParallaxContainer extends StatelessWidget {
 class ParallaxImage extends StatelessWidget {
   ParallaxImage.asset(
     String name, {
-    Key? key,
+    super.key,
     required double position,
     this.imageFactor = 0.3,
-  })  : image = Image.asset(
-          name,
-          fit: BoxFit.cover,
-          alignment: FractionalOffset(
-            0.5 + position * imageFactor,
-            0.5,
-          ),
-        ),
-        super(key: key);
+  }) : image = Image.asset(
+         name,
+         fit: BoxFit.cover,
+         alignment: FractionalOffset(0.5 + position * imageFactor, 0.5),
+       );
 
   final Image image;
   final double imageFactor;

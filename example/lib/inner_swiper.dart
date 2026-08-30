@@ -1,21 +1,19 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: InnerSwiper(),
-    );
+    return const MaterialApp(home: InnerSwiper());
   }
 }
 
 class InnerSwiper extends StatefulWidget {
-  const InnerSwiper({Key? key}) : super(key: key);
+  const InnerSwiper({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -50,19 +48,19 @@ class _InnerSwiperState extends State<InnerSwiper> {
           return Column(
             children: <Widget>[
               SizedBox(
+                height: 300.0,
                 child: Swiper(
                   controller: controllers[index],
                   pagination: const SwiperPagination(),
                   itemCount: 4,
                   itemBuilder: (context, index) {
-                    return Container(
+                    return const ColoredBox(
                       color: Colors.greenAccent,
-                      child: const Text('jkfjkldsfjd'),
+                      child: Text('jkfjkldsfjd'),
                     );
                   },
                   autoplay: autoPlayer[index],
                 ),
-                height: 300.0,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -80,7 +78,7 @@ class _InnerSwiperState extends State<InnerSwiper> {
                 },
                 child: const Text('End autoplay'),
               ),
-              Text('is autoplay: ${autoPlayer[index]}')
+              Text('is autoplay: ${autoPlayer[index]}'),
             ],
           );
         },

@@ -1,25 +1,29 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
-  testWidgets('Autoplay stays false after next() if autoplay is disabled', (tester) async {
+  testWidgets('Autoplay stays false after next() if autoplay is disabled', (
+    tester,
+  ) async {
     final controller = SwiperController();
-    int currentIndex = 0;
-    await tester.pumpWidget(MaterialApp(
-      home: Swiper(
-        controller: controller,
-        autoplay: false,
-        autoplayDelay: 100, // Short delay for testing
-        itemBuilder: (context, index) {
-          return Text('$index');
-        },
-        itemCount: 10,
-        onIndexChanged: (index) {
-          currentIndex = index;
-        },
+    var currentIndex = 0;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Swiper(
+          controller: controller,
+          autoplay: false,
+          autoplayDelay: 100, // Short delay for testing
+          itemBuilder: (context, index) {
+            return Text('$index');
+          },
+          itemCount: 10,
+          onIndexChanged: (index) {
+            currentIndex = index;
+          },
+        ),
       ),
-    ));
+    );
 
     expect(find.text('0'), findsOneWidget);
     expect(currentIndex, 0);
@@ -32,7 +36,7 @@ void main() {
     // The controller.next() calls the internal logic.
     // We need to await the Future returned by next() if possible,
     // or just pump enough time for animation.
-    controller.next();
+    await controller.next();
     await tester.pumpAndSettle();
 
     expect(currentIndex, 1);

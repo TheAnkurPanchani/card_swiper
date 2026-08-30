@@ -1,5 +1,5 @@
 /// This library is for swiper
-library card_swiper;
+library;
 
 export 'src/flutter_page_indicator/flutter_page_indicator.dart';
 export 'src/swiper.dart';

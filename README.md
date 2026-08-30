@@ -106,7 +106,7 @@ Edit lib/main.dart like this:
 
 ```dart
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:card_swiper/card_swiper.dart';
 
