@@ -2,42 +2,27 @@ import 'swiper_plugin.dart';
 import 'transformer_page_view/index_controller.dart';
 
 class SwipeIndexControllerEvent extends IndexControllerEventBase {
-  SwipeIndexControllerEvent({
-    required this.pos,
-    required bool animation,
-  }) : super(
-          animation: animation,
-          needToResetTimer: false,
-        );
+  SwipeIndexControllerEvent({required this.pos, required super.animation})
+    : super(needToResetTimer: false);
   final double pos;
 }
 
 class BuildIndexControllerEvent extends IndexControllerEventBase {
-  BuildIndexControllerEvent({
-    required bool animation,
-    required this.config,
-  }) : super(
-          animation: animation,
-          needToResetTimer: false,
-        );
+  BuildIndexControllerEvent({required super.animation, required this.config})
+    : super(needToResetTimer: false);
   final SwiperPluginConfig config;
 }
 
 class AutoPlaySwiperControllerEvent extends IndexControllerEventBase {
   AutoPlaySwiperControllerEvent({
-    required bool animation,
+    required super.animation,
     required this.autoplay,
-  }) : super(
-          animation: animation,
-          needToResetTimer: false,
-        );
+  }) : super(needToResetTimer: false);
 
-  AutoPlaySwiperControllerEvent.start({
-    required bool animation,
-  }) : this(animation: animation, autoplay: true);
-  AutoPlaySwiperControllerEvent.stop({
-    required bool animation,
-  }) : this(animation: animation, autoplay: false);
+  AutoPlaySwiperControllerEvent.start({required bool animation})
+    : this(animation: animation, autoplay: true);
+  AutoPlaySwiperControllerEvent.stop({required bool animation})
+    : this(animation: animation, autoplay: false);
   final bool autoplay;
 }
 

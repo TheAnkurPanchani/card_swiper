@@ -1,6 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   testWidgets('STACK', (tester) async {
@@ -13,9 +13,7 @@ void main() {
           itemBuilder: (context, index) {
             return ColoredBox(
               color: Colors.grey,
-              child: Center(
-                child: Text('$index'),
-              ),
+              child: Center(child: Text('$index')),
             );
           },
           itemCount: 10,
@@ -34,9 +32,7 @@ void main() {
           itemBuilder: (context, index) {
             return ColoredBox(
               color: Colors.grey,
-              child: Center(
-                child: Text('$index'),
-              ),
+              child: Center(child: Text('$index')),
             );
           },
           itemCount: 10,
@@ -55,9 +51,7 @@ void main() {
           itemBuilder: (context, index) {
             return ColoredBox(
               color: Colors.grey,
-              child: Center(
-                child: Text('$index'),
-              ),
+              child: Center(child: Text('$index')),
             );
           },
           itemCount: 10,
@@ -70,13 +64,11 @@ void main() {
     CustomLayoutOption customLayoutOption;
     customLayoutOption = CustomLayoutOption(startIndex: -1, stateCount: 3)
       ..addRotate([-45.0 / 180, 0.0, 45.0 / 180])
-      ..addTranslate(
-        const [
-          Offset(-370.0, -40.0),
-          Offset.zero,
-          Offset(370.0, -40.0),
-        ],
-      );
+      ..addTranslate(const [
+        Offset(-370.0, -40.0),
+        Offset.zero,
+        Offset(370.0, -40.0),
+      ]);
     await tester.pumpWidget(
       MaterialApp(
         home: Swiper(
@@ -87,9 +79,7 @@ void main() {
           itemBuilder: (context, index) {
             return ColoredBox(
               color: Colors.grey,
-              child: Center(
-                child: Text('$index'),
-              ),
+              child: Center(child: Text('$index')),
             );
           },
           itemCount: 10,

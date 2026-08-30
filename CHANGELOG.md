@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [4.0.0] - 2026-08-30
+
+### Changed
+
+- Migrates to `material_ui` and `cupertino_ui`.
+- Updates minimum supported SDK version to Flutter 3.44/Dart 3.12.
+
 ## [3.0.1] - 2023-07-09
 
 ### Changed

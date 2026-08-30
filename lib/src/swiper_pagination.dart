@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../card_swiper.dart';
 
@@ -49,7 +49,7 @@ class FractionPaginationBuilder extends SwiperPlugin {
           Text(
             '${config.itemCount}',
             style: TextStyle(color: color, fontSize: fontSize),
-          )
+          ),
         ],
       );
     } else {
@@ -64,7 +64,7 @@ class FractionPaginationBuilder extends SwiperPlugin {
           Text(
             ' / ${config.itemCount}',
             style: TextStyle(color: color, fontSize: fontSize),
-          )
+          ),
         ],
       );
     }
@@ -111,34 +111,28 @@ class RectSwiperPaginationBuilder extends SwiperPlugin {
     if (itemCount > 20) {
       log(
         'The itemCount is too big, we suggest use FractionPaginationBuilder '
-            'instead of DotSwiperPaginationBuilder in this situation',
+        'instead of DotSwiperPaginationBuilder in this situation',
       );
     }
 
     for (var i = 0; i < itemCount; ++i) {
       final active = i == activeIndex;
       final size = active ? activeSize : this.size;
-      list.add(Container(
-        width: size.width,
-        height: size.height,
-        color: active ? activeColor : color,
-        key: Key('pagination_$i'),
-        margin: EdgeInsets.all(space),
-      ),);
+      list.add(
+        Container(
+          width: size.width,
+          height: size.height,
+          color: active ? activeColor : color,
+          key: Key('pagination_$i'),
+          margin: EdgeInsets.all(space),
+        ),
+      );
     }
 
     if (config.scrollDirection == Axis.vertical) {
-      return Column(
-        key: key,
-        mainAxisSize: MainAxisSize.min,
-        children: list,
-      );
+      return Column(key: key, mainAxisSize: MainAxisSize.min, children: list);
     } else {
-      return Row(
-        key: key,
-        mainAxisSize: MainAxisSize.min,
-        children: list,
-      );
+      return Row(key: key, mainAxisSize: MainAxisSize.min, children: list);
     }
   }
 }
@@ -175,7 +169,7 @@ class DotSwiperPaginationBuilder extends SwiperPlugin {
     if (config.itemCount > 20) {
       log(
         'The itemCount is too big, we suggest use FractionPaginationBuilder '
-            'instead of DotSwiperPaginationBuilder in this situation',
+        'instead of DotSwiperPaginationBuilder in this situation',
       );
     }
     var activeColor = this.activeColor;
@@ -207,39 +201,31 @@ class DotSwiperPaginationBuilder extends SwiperPlugin {
 
     for (var i = 0; i < itemCount; ++i) {
       final active = i == activeIndex;
-      list.add(Container(
-        key: Key('pagination_$i'),
-        margin: EdgeInsets.all(space),
-        child: ClipOval(
-          child: Container(
-            color: active ? activeColor : color,
-            width: active ? activeSize : size,
-            height: active ? activeSize : size,
+      list.add(
+        Container(
+          key: Key('pagination_$i'),
+          margin: EdgeInsets.all(space),
+          child: ClipOval(
+            child: Container(
+              color: active ? activeColor : color,
+              width: active ? activeSize : size,
+              height: active ? activeSize : size,
+            ),
           ),
         ),
-      ));
+      );
     }
 
     if (config.scrollDirection == Axis.vertical) {
-      return Column(
-        key: key,
-        mainAxisSize: MainAxisSize.min,
-        children: list,
-      );
+      return Column(key: key, mainAxisSize: MainAxisSize.min, children: list);
     } else {
-      return Row(
-        key: key,
-        mainAxisSize: MainAxisSize.min,
-        children: list,
-      );
+      return Row(key: key, mainAxisSize: MainAxisSize.min, children: list);
     }
   }
 }
 
-typedef SwiperPaginationBuilder = Widget Function(
-    BuildContext context,
-    SwiperPluginConfig config,
-    );
+typedef SwiperPaginationBuilder =
+    Widget Function(BuildContext context, SwiperPluginConfig config);
 
 class SwiperCustomPagination extends SwiperPlugin {
   const SwiperCustomPagination({required this.builder});

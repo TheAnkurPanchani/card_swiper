@@ -91,9 +91,7 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
   Widget _buildItem(int i, int realIndex, double animationValue);
 
   Widget _buildContainer(List<Widget> list) {
-    return Stack(
-      children: list,
-    );
+    return Stack(children: list);
   }
 
   Widget _buildAnimation(BuildContext context, Widget? w) {
@@ -124,11 +122,7 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
       onPanStart: _allowScrolling ? _onPanStart : null,
       onPanEnd: _allowScrolling ? _onPanEnd : null,
       onPanUpdate: _allowScrolling ? _onPanUpdate : null,
-      child: ClipRect(
-        child: Center(
-          child: _buildContainer(list),
-        ),
-      ),
+      child: ClipRect(child: Center(child: _buildContainer(list))),
     );
   }
 
@@ -240,7 +234,8 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
 
   void _onPanUpdate(DragUpdateDetails details) {
     if (_lockScroll) return;
-    var value = _currentValue +
+    var value =
+        _currentValue +
         ((widget.scrollDirection == Axis.horizontal
                     ? details.globalPosition.dx
                     : details.globalPosition.dy) -
@@ -309,9 +304,9 @@ abstract class TransformBuilder<T> {
 
 class ScaleTransformBuilder extends TransformBuilder<double> {
   ScaleTransformBuilder({
-    required List<double> values,
+    required super.values,
     this.alignment = Alignment.center,
-  }) : super(values: values);
+  });
 
   final Alignment alignment;
 
@@ -323,44 +318,32 @@ class ScaleTransformBuilder extends TransformBuilder<double> {
 }
 
 class OpacityTransformBuilder extends TransformBuilder<double> {
-  OpacityTransformBuilder({required List<double> values})
-      : super(values: values);
+  OpacityTransformBuilder({required super.values});
 
   @override
   Widget build(int i, double animationValue, Widget widget) {
     final v = _getValue(values, animationValue, i);
-    return Opacity(
-      opacity: v,
-      child: widget,
-    );
+    return Opacity(opacity: v, child: widget);
   }
 }
 
 class RotateTransformBuilder extends TransformBuilder<double> {
-  RotateTransformBuilder({required List<double> values})
-      : super(values: values);
+  RotateTransformBuilder({required super.values});
 
   @override
   Widget build(int i, double animationValue, Widget widget) {
     final v = _getValue(values, animationValue, i);
-    return Transform.rotate(
-      angle: v,
-      child: widget,
-    );
+    return Transform.rotate(angle: v, child: widget);
   }
 }
 
 class TranslateTransformBuilder extends TransformBuilder<Offset> {
-  TranslateTransformBuilder({required List<Offset> values})
-      : super(values: values);
+  TranslateTransformBuilder({required super.values});
 
   @override
   Widget build(int i, double animationValue, Widget widget) {
     final s = _getOffsetValue(values, animationValue, i);
-    return Transform.translate(
-      offset: s,
-      child: widget,
-    );
+    return Transform.translate(offset: s, child: widget);
   }
 }
 
@@ -391,36 +374,20 @@ class CustomLayoutOption {
 class _CustomLayoutSwiper extends _SubSwiper {
   const _CustomLayoutSwiper({
     required this.option,
-    double? itemWidth,
-    required bool loop,
-    double? itemHeight,
-    ValueChanged<int>? onIndexChanged,
-    Key? key,
-    IndexedWidgetBuilder? itemBuilder,
-    required Curve curve,
-    int? duration,
-    int? index,
-    required int itemCount,
-    Axis? scrollDirection,
-    required SwiperController controller,
-    AxisDirection? axisDirection,
-    bool allowScrolling = true,
-  }) : super(
-          loop: loop,
-          onIndexChanged: onIndexChanged,
-          itemWidth: itemWidth,
-          itemHeight: itemHeight,
-          key: key,
-          itemBuilder: itemBuilder,
-          curve: curve,
-          duration: duration,
-          index: index,
-          itemCount: itemCount,
-          controller: controller,
-          scrollDirection: scrollDirection,
-          axisDirection: axisDirection,
-          allowScrolling: allowScrolling,
-        );
+    super.itemWidth,
+    required super.loop,
+    super.itemHeight,
+    super.onIndexChanged,
+    super.itemBuilder,
+    required super.curve,
+    super.duration,
+    super.index,
+    required super.itemCount,
+    super.scrollDirection = null,
+    required super.controller,
+    super.axisDirection = null,
+    super.allowScrolling,
+  });
 
   final CustomLayoutOption option;
 
@@ -450,9 +417,10 @@ class _CustomLayoutState extends _CustomLayoutStateBase<_CustomLayoutSwiper> {
     final builders = widget.option.builders;
 
     Widget child = SizedBox(
-        width: widget.itemWidth ?? double.infinity,
-        height: widget.itemHeight ?? double.infinity,
-        child: widget.itemBuilder!(context, realIndex));
+      width: widget.itemWidth ?? double.infinity,
+      height: widget.itemHeight ?? double.infinity,
+      child: widget.itemBuilder!(context, realIndex),
+    );
 
     for (var i = builders.length - 1; i >= 0; --i) {
       final builder = builders[i];

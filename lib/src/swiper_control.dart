@@ -1,5 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SwiperControl extends SwiperPlugin {
   const SwiperControl({
@@ -49,15 +49,17 @@ class SwiperControl extends SwiperPlugin {
         }
       },
       child: Padding(
-          padding: padding,
-          child: RotatedBox(
-              quarterTurns: quarterTurns,
-              child: Icon(
-                iconData,
-                semanticLabel: previous ? 'Previous' : 'Next',
-                size: size,
-                color: color,
-              ))),
+        padding: padding,
+        child: RotatedBox(
+          quarterTurns: quarterTurns,
+          child: Icon(
+            iconData,
+            semanticLabel: previous ? 'Previous' : 'Next',
+            size: size,
+            color: color,
+          ),
+        ),
+      ),
     );
   }
 
@@ -98,7 +100,7 @@ class SwiperControl extends SwiperPlugin {
             iconData: iconNext,
             quarterTurns: 0,
             previous: false,
-          )
+          ),
         ],
       );
     } else {
@@ -119,13 +121,11 @@ class SwiperControl extends SwiperPlugin {
             iconData: iconNext,
             quarterTurns: -3,
             previous: false,
-          )
+          ),
         ],
       );
     }
 
-    return SizedBox.expand(
-      child: child,
-    );
+    return SizedBox.expand(child: child);
   }
 }
