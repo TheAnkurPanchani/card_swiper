@@ -124,6 +124,7 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
       onPanStart: _allowScrolling ? _onPanStart : null,
       onPanEnd: _allowScrolling ? _onPanEnd : null,
       onPanUpdate: _allowScrolling ? _onPanUpdate : null,
+      onPanCancel: _allowScrolling ? _onPanCancel : null,
       child: ClipRect(
         child: Center(
           child: _buildContainer(list),
@@ -147,6 +148,7 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
   late double _currentPos;
 
   bool _lockScroll = false;
+  bool _dragStarted = false;
 
   Future<void> _move(double position, {int? nextIndex}) async {
     if (_lockScroll) return;
@@ -209,6 +211,8 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
   }
 
   Future<void> _onPanEnd(DragEndDetails details) async {
+    if (!_dragStarted) return;
+    _dragStarted = false;
     if (_lockScroll) return;
 
     final velocity = widget.scrollDirection == Axis.horizontal
@@ -231,15 +235,26 @@ abstract class _CustomLayoutStateBase<T extends _SubSwiper> extends State<T>
   }
 
   void _onPanStart(DragStartDetails details) {
+    // Keep a drag ignored if its start was skipped during an animation.
+    _dragStarted = false;
     if (_lockScroll) return;
     _currentValue = _animationController.value;
     _currentPos = widget.scrollDirection == Axis.horizontal
         ? details.globalPosition.dx
         : details.globalPosition.dy;
+    _dragStarted = true;
+  }
+
+  void _onPanCancel() {
+    if (!_dragStarted) return;
+    _dragStarted = false;
+    if (!_lockScroll) {
+      unawaited(_move(0.5));
+    }
   }
 
   void _onPanUpdate(DragUpdateDetails details) {
-    if (_lockScroll) return;
+    if (_lockScroll || !_dragStarted) return;
     var value = _currentValue +
         ((widget.scrollDirection == Axis.horizontal
                     ? details.globalPosition.dx
